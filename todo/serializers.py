@@ -14,11 +14,17 @@ class TodoSerializer(serializers.ModelSerializer):
         model = Todo
         fields = '__all__'
         depth=1
+        
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data['user'] =UserSerializer(instance.user).data 
         return data
     
+    def validate(self, obj):
+        obj['user']=self.context['request'].user
+        return obj
+
+
 class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(required = True)
     class Meta:
@@ -47,3 +53,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
 class UserLoginSerializers(serializers.Serializer):
     username= serializers.CharField(required=True)
     password= serializers.CharField(required=True)
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User 
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'is_superuser']

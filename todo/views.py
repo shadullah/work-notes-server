@@ -11,9 +11,13 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
+from django.contrib.auth.models import User
 
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+
 
 # Create your views here.
 class TodoView(viewsets.ModelViewSet):
@@ -74,7 +78,15 @@ class UserLoginApiView(APIView):
         return Response(serializer.errors)
     
 class UserLogoutView(APIView):
+    authentication_classes = [BasicAuthentication,TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, req):
+        print(req.user)
         req.user.auth_token.delete()
         logout(req)
-        return redirect('login')
+        return Response({"message": "logout Successfull"})
+        # return redirect('login')
+    
+class ProfileInfo(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class= serializers.UserSerializer
