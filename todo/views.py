@@ -16,7 +16,6 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from rest_framework.decorators import api_view
 
 
 # Create your views here.
@@ -95,3 +94,8 @@ class PriorityChoiceViewset(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]
     queryset = PriorityChoices.objects.all()
     serializer_class = serializers.PriorityChoiceSerializer
+
+def delete_todo(req, id):
+    data = Todo.objects.get(pk=id)
+    data.delete()
+    return
