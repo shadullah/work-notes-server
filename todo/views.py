@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from rest_framework import viewsets
 from .serializers import TodoSerializer
-from .models import Todo 
+from .models import Todo, PriorityChoices
 from . import serializers
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -14,9 +14,9 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from django.contrib.auth.models import User
-
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from rest_framework.decorators import api_view
 
 
 # Create your views here.
@@ -90,3 +90,8 @@ class UserLogoutView(APIView):
 class ProfileInfo(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class= serializers.UserSerializer
+
+class PriorityChoiceViewset(viewsets.ModelViewSet):
+    # permission_classes = [IsAuthenticated]
+    queryset = PriorityChoices.objects.all()
+    serializer_class = serializers.PriorityChoiceSerializer

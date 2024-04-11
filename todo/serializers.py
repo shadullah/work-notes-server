@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Todo
+from .models import Todo, PriorityChoices
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
@@ -8,6 +8,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'first_name', 'last_name', 'email')
+
+class PriorityChoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PriorityChoices
+        fields = '__all__'
 
 class TodoSerializer(serializers.ModelSerializer):
     class Meta:
