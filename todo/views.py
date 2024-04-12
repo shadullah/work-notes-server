@@ -94,8 +94,3 @@ class PriorityChoiceViewset(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]
     queryset = PriorityChoices.objects.all()
     serializer_class = serializers.PriorityChoiceSerializer
-
-def delete_todo(req, id):
-    data = Todo.objects.get(pk=id)
-    data.delete()
-    return

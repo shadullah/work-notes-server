@@ -18,7 +18,7 @@ class PriorityChoices(models.Model):
 class Todo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
-    description = models.CharField(max_length=500)
+    description = models.CharField(max_length=10000)
     completed = models.BooleanField(default=False)
     date=models.DateField(auto_now_add = True)
     priority = models.CharField(choices=PRIORITY_CHOICES,max_length=20, default='Regular')

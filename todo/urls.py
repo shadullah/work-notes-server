@@ -15,5 +15,4 @@ urlpatterns = [
     path('login/', views.UserLoginApiView.as_view() , name='login'),
     path('logout/', views.UserLogoutView.as_view() , name='logout'),
     path('active/<uid64>/<token>/', views.activate, name='activate'),
-    path('delete/<int:id>/', views.delete_todo, name='delete'),
 ]
