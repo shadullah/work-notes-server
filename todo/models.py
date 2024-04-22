@@ -1,16 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
-PRIORITY_CHOICES=[
-    ('Regular', 'Regular'),
-    ('Moderate', 'Moderate'),
-    ('Important', 'Important'),
-    ('Urgent', 'Urgent'),
-    ('Very Urgent', 'Very Urgent'),
-]
+# PRIORITY_CHOICES=[
+#     ('Regular', 'Regular'),
+#     ('Moderate', 'Moderate'),
+#     ('Important', 'Important'),
+#     ('Urgent', 'Urgent'),
+#     ('Very Urgent', 'Very Urgent'),
+# ]
 
 class PriorityChoices(models.Model):
     name = models.CharField(max_length=30)
+    slug = models.SlugField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -21,7 +22,7 @@ class Todo(models.Model):
     description = models.CharField(max_length=10000)
     completed = models.BooleanField(default=False)
     date=models.DateField(auto_now_add = True)
-    priority = models.CharField(choices=PRIORITY_CHOICES,max_length=20, default='Regular')
+    priority = models.ManyToManyField(PriorityChoices, default=1)
 
     def __str__(self):
         return self.title
