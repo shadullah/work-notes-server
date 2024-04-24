@@ -4,7 +4,7 @@ from . import views
 from . views import ProfileInfo, PriorityChoiceViewset
 
 router= DefaultRouter()
-router.register('list', views.TodoView)
+# router.register('list', views.TodoView)
 router.register('users', ProfileInfo)
 router.register('priority_choice', PriorityChoiceViewset)
 
@@ -15,4 +15,6 @@ urlpatterns = [
     path('login/', views.UserLoginApiView.as_view() , name='login'),
     path('logout/', views.UserLogoutView.as_view() , name='logout'),
     path('active/<uid64>/<token>/', views.activate, name='activate'),
+    path('list/', views.PrioView.as_view(), name='priority_choice')
+
 ]

@@ -17,7 +17,7 @@ class PriorityChoiceSerializer(serializers.ModelSerializer):
 class TodoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Todo
-        fields = '__all__'
+        fields = ['id', 'user', 'title', 'description', 'completed', 'date', 'priority']
         depth=1
         
     def to_representation(self, instance):

@@ -94,3 +94,13 @@ class PriorityChoiceViewset(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]
     queryset = PriorityChoices.objects.all()
     serializer_class = serializers.PriorityChoiceSerializer
+
+
+class PrioView(APIView):
+    def post(self, req):
+        print(req.data)
+        serializer = TodoSerializer(data=req.data,context={'request': req})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
