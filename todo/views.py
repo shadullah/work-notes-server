@@ -31,18 +31,19 @@ class UserRegistrationApiView(APIView):
 
         if serializer.is_valid():
             user = serializer.save()
-            print(user)
-            token = default_token_generator.make_token(user)
-            print(token)
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            print(uid)
-            confirm_link = f"http://127.0.0.1:8000/todo/active/{uid}/{token}"
-            email_subject="Confirm your Email"
-            email_body= render_to_string('confirm_email.html', {'confirm_link': confirm_link})
-            email = EmailMultiAlternatives(email_subject, '', to=[user.email])
-            email.attach_alternative(email_body, "text/html")
-            email.send()
-            return Response("Check Your email for confirmation")
+            # print(user)
+            # token = default_token_generator.make_token(user)
+            # print(token)
+            # uid = urlsafe_base64_encode(force_bytes(user.pk))
+            # print(uid)
+            # confirm_link = f"http://127.0.0.1:8000/todo/active/{uid}/{token}"
+            # email_subject="Confirm your Email"
+            # email_body= render_to_string('confirm_email.html', {'confirm_link': confirm_link})
+            # email = EmailMultiAlternatives(email_subject, '', to=[user.email])
+            # email.attach_alternative(email_body, "text/html")
+            # email.send()
+            # return Response("Check Your email for confirmation")
+            return Response("User Sign Up successful")
         return Response(serializer.errors)
     
 def activate(req, uid64, token):
