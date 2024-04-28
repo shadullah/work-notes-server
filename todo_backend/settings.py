@@ -47,12 +47,15 @@ INSTALLED_APPS = [
 ]
 
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:5173',
+    'http://localhost:5173', 'https://work-notes-server.onrender.com'
 )
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:5173',
+# ]
+
+CSRF_TRUSTED_ORIGINS = ['https://work-notes-server.onrender.com', 'https://*.127.0.0.1']
+
 
 ACCESS_CONTROL_ALLOW_ORIGIN = 'http://localhost:5173'
 
