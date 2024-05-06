@@ -21,10 +21,10 @@ from todo import views
 
 route= routers.DefaultRouter()
 route.register("", views.TodoView, basename="todoview")
+# route.register("", views.TodoViewSet, basename="todoview")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(route.urls)),
     path('todo/', include("todo.urls")),
-    
+    path('api/', include(route.urls)),
 ]

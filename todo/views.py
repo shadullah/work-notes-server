@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect
 from rest_framework import viewsets
-from .serializers import TodoSerializer
+from .serializers import TodoSerializer,PriorityChoiceSerializer
 from .models import Todo, PriorityChoices
 from . import serializers
+from rest_framework import filters, pagination
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.tokens import default_token_generator
@@ -19,10 +20,6 @@ from django.template.loader import render_to_string
 
 
 # Create your views here.
-class TodoView(viewsets.ModelViewSet):
-    serializer_class = TodoSerializer
-    queryset = Todo.objects.all().order_by("-id")
-
 class UserRegistrationApiView(APIView):
     serializer_class = serializers.RegistrationSerializer
 
@@ -91,17 +88,55 @@ class ProfileInfo(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class= serializers.UserSerializer
 
+
+
+# my Main
+class TodoPagination(pagination.PageNumberPagination):
+    page_size = 3
+    page_size_query_param = page_size
+    max_page_size = 100
+
+
+class TodoView(viewsets.ModelViewSet):
+    serializer_class = TodoSerializer
+    queryset = Todo.objects.all().order_by("-id")
+    pagination_class= TodoPagination
+
+
 class PriorityChoiceViewset(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]
     queryset = PriorityChoices.objects.all()
     serializer_class = serializers.PriorityChoiceSerializer
+# above my main end
 
 
-class PrioView(APIView):
-    def post(self, req):
-        print(req.data)
-        serializer = TodoSerializer(data=req.data,context={'request': req})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+
+# vai's views
+
+# class ToapiView(APIView):
+#     serializer_class = TodoSerializer
+
+#     def get_queryset(self):
+#         return Todo.objects.all()
+
+#     def get(self, request):
+#         todos = self.get_queryset()  # Retrieve all Todo objects from the queryset
+#         serializer = self.serializer_class(todos, many=True)
+#         return Response(serializer.data)
+
+#     def post(self, request):
+#         print(request.data)
+#         serializer = TodoSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()  # Save the validated data to the database
+#             return Response(serializer.data)
+#         return Response(serializer.errors)
+
+# class PrioView(APIView):
+#     def post(self, req):
+#         print(req.data)
+#         serializer = TodoSerializer(data=req.data,context={'request': req})
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors)

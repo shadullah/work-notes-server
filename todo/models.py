@@ -18,14 +18,14 @@ class PriorityChoices(models.Model):
 
 class Todo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=1000)
     description = models.CharField(max_length=10000)
     completed = models.BooleanField(default=False)
     date=models.DateField(auto_now_add = True)
-    priority = models.ManyToManyField(PriorityChoices, default=1)
+    priority = models.ManyToManyField(PriorityChoices, blank=True, null=True)
 
-    def __str__(self):
-        return self.title
+    # def __str__(self):
+    #     return self.title
     
 class Profile(models.Model):
     user= models.OneToOneField(User, on_delete=models.CASCADE)
