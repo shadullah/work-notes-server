@@ -17,6 +17,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 # Create your views here.
@@ -91,16 +92,21 @@ class ProfileInfo(viewsets.ModelViewSet):
 
 
 # my Main
-class TodoPagination(pagination.PageNumberPagination):
-    page_size = 3
-    page_size_query_param = page_size
-    max_page_size = 100
+# class TodoPagination(pagination.PageNumberPagination):
+#     page_size = 3
+#     page_size_query_param = page_size
+#     max_page_size = 100
+# pagination krle array change hoye jay
+
 
 
 class TodoView(viewsets.ModelViewSet):
     serializer_class = TodoSerializer
     queryset = Todo.objects.all().order_by("-id")
-    pagination_class= TodoPagination
+    # pagination_class= TodoPagination
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    search_fields = ['title', 'description', 'priority__name']
+    filterset_fields = {'completed':['exact']}
 
 
 class PriorityChoiceViewset(viewsets.ModelViewSet):

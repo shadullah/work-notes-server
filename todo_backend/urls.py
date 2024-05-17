@@ -18,13 +18,14 @@ from django.contrib import admin
 from django.urls import path,include
 from rest_framework import routers
 from todo import views
+from . import views
 
 route= routers.DefaultRouter()
-route.register("", views.TodoView, basename="todoview")
-# route.register("", views.TodoViewSet, basename="todoview")
+# route.register("", views.TodoView, basename="todoview")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.Home, name="home"),
     path('todo/', include("todo.urls")),
-    path('api/', include(route.urls)),
+    # path('api/', include(route.urls)),
 ]
