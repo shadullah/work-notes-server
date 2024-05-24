@@ -9,6 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'first_name', 'last_name', 'email')
 
+
 class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(required = True)
     class Meta:
@@ -33,6 +34,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
         # account.is_active = False
         account.save()
         return account
+    
+    
     
 class UserLoginSerializers(serializers.Serializer):
     username= serializers.CharField(required=True)

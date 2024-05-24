@@ -12,7 +12,7 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
@@ -21,6 +21,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 
 # Create your views here.
+
+
 class UserRegistrationApiView(APIView):
     serializer_class = serializers.RegistrationSerializer
 
@@ -103,6 +105,7 @@ class ProfileInfo(viewsets.ModelViewSet):
 class TodoView(viewsets.ModelViewSet):
     serializer_class = TodoSerializer
     queryset = Todo.objects.all().order_by("-id")
+    permission_classes = [AllowAny]
     # pagination_class= TodoPagination
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ['title', 'description', 'priority__name']

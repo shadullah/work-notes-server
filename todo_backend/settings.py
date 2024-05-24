@@ -55,17 +55,19 @@ CORS_ORIGIN_WHITELIST = (
 #     'http://localhost:5173',
 # ]
 
-CSRF_TRUSTED_ORIGINS = ['https://work-notes-server.onrender.com', 'https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://work-notes-server.onrender.com', 'https://*.127.0.0.1', 'http://localhost:5173',]
 
 
-ACCESS_CONTROL_ALLOW_ORIGIN = 'http://localhost:5173'
+ACCESS_CONTROL_ALLOW_ORIGIN =[
+    'http://localhost:5173', 'https://work-notes-frontend.vercel.app/'
+] 
 
 CORS_ALLOW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication', 
+        'rest_framework.authentication.SessionAuthentication', 
         'rest_framework.authentication.TokenAuthentication', 
     ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
