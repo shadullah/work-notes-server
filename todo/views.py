@@ -105,7 +105,7 @@ class ProfileInfo(viewsets.ModelViewSet):
 class TodoView(viewsets.ModelViewSet):
     serializer_class = TodoSerializer
     queryset = Todo.objects.all().order_by("-id")
-    permission_classes = [AllowAny]
+    # permission_classes = [AllowAny]
     # pagination_class= TodoPagination
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ['title', 'description', 'priority__name']
