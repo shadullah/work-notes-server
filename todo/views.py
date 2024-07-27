@@ -68,9 +68,9 @@ class UserLoginApiView(APIView):
             password = serializer.validated_data['password']
 
             user=authenticate(username=username, password=password)
-            login(request, user)
 
             if user:
+                login(request, user)
                 token, _=Token.objects.get_or_create(user=user)
                 return Response({'token': token.key, 'user_id': user.id})
             else:
