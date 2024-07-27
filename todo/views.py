@@ -81,10 +81,13 @@ class UserLogoutView(APIView):
     authentication_classes = [BasicAuthentication,TokenAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, req):
-        print(req.user)
-        req.user.auth_token.delete()
-        logout(req)
-        return Response({"message": "logout Successfull"})
+        try:
+            print(req.user)
+            req.user.auth_token.delete()
+            logout(req)
+            return Response({"message": "logout Successfull"})
+        except:
+            return Response({"message": "failed to logout"})
         # return redirect('login')
     
 class ProfileInfo(viewsets.ModelViewSet):
