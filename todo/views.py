@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from rest_framework import viewsets
 from .serializers import TodoSerializer,PriorityChoiceSerializer
-from .models import Todo, PriorityChoices
+from .models import Todo, PriorityChoices, Profile
 from . import serializers
 from rest_framework import filters, pagination
 from rest_framework.views import APIView
@@ -90,9 +90,13 @@ class UserLogoutView(APIView):
             return Response({"message": "failed to logout"})
         # return redirect('login')
     
-class ProfileInfo(viewsets.ModelViewSet):
+class UsersInfo(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class= serializers.UserSerializer
+
+class ProfileInfo(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class= serializers.UserProfileSerializer
 
 
 
@@ -119,6 +123,7 @@ class PriorityChoiceViewset(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]
     queryset = PriorityChoices.objects.all()
     serializer_class = serializers.PriorityChoiceSerializer
+
 # above my main end
 
 

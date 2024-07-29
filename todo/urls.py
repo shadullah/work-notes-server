@@ -1,14 +1,13 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path,include
 from . import views
-from . views import ProfileInfo, PriorityChoiceViewset
+from . views import UsersInfo, PriorityChoiceViewset, ProfileInfo
 
 router= DefaultRouter()
 router.register('list', views.TodoView)
-# router.register('tod', views.ToapiView.as_view())
-# router.register('prio', views.PrioView.as_view(), basename='prio')
-router.register('users', ProfileInfo)
+router.register('users', UsersInfo)
 router.register('priority_choice',PriorityChoiceViewset)
+router.register('profiles',ProfileInfo)
 
 
 urlpatterns = [
@@ -18,5 +17,4 @@ urlpatterns = [
     path('login/', views.UserLoginApiView.as_view() , name='login'),
     path('logout/', views.UserLogoutView.as_view() , name='logout'),
     path('active/<uid64>/<token>/', views.activate, name='activate'),
-    # path('listing/', views.PrioView.as_view(), name='listing')
 ]

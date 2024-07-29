@@ -1,13 +1,13 @@
 from rest_framework import serializers
-from .models import Todo, PriorityChoices
+from .models import Todo, PriorityChoices, Profile
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'email')
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ('id', 'username', 'first_name', 'last_name', 'email')
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -33,6 +33,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
         account.set_password(password)
         # account.is_active = False
         account.save()
+
+        Profile.objects.create(user=account)
+
         return account
     
     
@@ -45,6 +48,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User 
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'is_superuser']
+        
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile 
+        fields = '__all__'
 
 
 class TodoSerializer(serializers.ModelSerializer):
